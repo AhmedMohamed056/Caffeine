@@ -1,5 +1,6 @@
 package com.thechance.caffeine.screens
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
@@ -49,9 +51,15 @@ val coffeeDrinks = listOf(
 fun CoffeePagerScreen(
     onClick: (CoffeeDrink) -> Unit
 ) {
-    val pagerState = rememberPagerState(initialPage = 1) {
+    val initialPageIndex = coffeeDrinks.indexOfFirst { it.name == "Black" }.coerceAtLeast(0)
+    val pagerState = rememberPagerState(initialPage = initialPageIndex) {
         coffeeDrinks.size
     }
+
+    val customFlingBehavior = PagerDefaults.flingBehavior(
+        state = pagerState,
+        snapAnimationSpec = tween(durationMillis = 400)
+    )
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -95,7 +103,8 @@ fun CoffeePagerScreen(
         HorizontalPager(
             state = pagerState,
             contentPadding = PaddingValues(horizontal = 100.dp),
-            pageSpacing = 36.dp
+            pageSpacing = 36.dp,
+            flingBehavior = customFlingBehavior
         ) { page ->
             PagerItem(
                 drink = coffeeDrinks[page],

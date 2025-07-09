@@ -51,6 +51,9 @@ fun HomeScreen() {
                     drink = drink,
                     onContinueClicked = {
                         currentState = HomeUIState.SnackSelection
+                    },
+                    onBackClicked = {
+                        currentState = HomeUIState.Welcome
                     }
                 )
             }
@@ -61,11 +64,22 @@ fun HomeScreen() {
                     selectedSnack = snack
                     currentState = HomeUIState.ThankYou
                 },
+                onBackClicked = {
+                    currentState = HomeUIState.Welcome
+                }
             )
         }
         HomeUIState.ThankYou -> {
             selectedSnack?.let { snack ->
-                ThankYouScreen(snack = snack)
+                ThankYouScreen(
+                    snack = snack,
+                    onContinueClicked = {
+                        currentState = HomeUIState.Welcome
+                    },
+                    onBackClicked = {
+                        currentState = HomeUIState.Welcome
+                    }
+                )
             }
         }
     }

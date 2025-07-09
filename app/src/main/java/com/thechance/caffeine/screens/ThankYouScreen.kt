@@ -2,6 +2,7 @@ package com.thechance.caffeine.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -29,7 +31,9 @@ import com.thechance.caffeine.composable.ButtonWithText
 
 @Composable
 fun ThankYouScreen(
-    snack: Snack
+    snack: Snack,
+    onContinueClicked: () -> Unit,
+    onBackClicked: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize().padding(top = 10.dp),
@@ -43,7 +47,9 @@ fun ThankYouScreen(
                     shape = CircleShape
                 )
                 .padding(12.dp)
-                .align(Alignment.Start),
+                .align(Alignment.Start)
+                .clip(CircleShape)
+                .clickable(onClick = onBackClicked),
             painter = painterResource(R.drawable.ic_close),
             contentDescription = null,
             tint = Color.Unspecified
@@ -52,7 +58,8 @@ fun ThankYouScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 8.dp),
+            horizontalArrangement = Arrangement.Center
         ) {
             Icon(
                 modifier = Modifier.size(32.dp),
@@ -107,7 +114,7 @@ fun ThankYouScreen(
             modifier = Modifier.padding(bottom = 50.dp),
             text = "thank you",
             icon = painterResource(R.drawable.arrow_right_coffe),
-            onClick = {}
+            onClick = onContinueClicked
         )
     }
 }

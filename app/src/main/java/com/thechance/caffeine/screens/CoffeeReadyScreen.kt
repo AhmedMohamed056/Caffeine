@@ -8,6 +8,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,7 +50,8 @@ import com.thechance.caffeine.composable.ButtonWithText
 @Composable
 fun CoffeeReadyScreen(
     drink: CoffeeDrink,
-    onContinueClicked: () -> Unit
+    onContinueClicked: () -> Unit,
+    onBackClicked: () -> Unit
 ) {
     val animationState = remember { MutableTransitionState(false) }
 
@@ -93,7 +95,7 @@ fun CoffeeReadyScreen(
         Column(
             modifier = Modifier
                 .align(Alignment.Center)
-                .offset(y = 60.dp)
+                .offset(y = 50.dp)
                 .alpha(contentAlpha),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -105,7 +107,7 @@ fun CoffeeReadyScreen(
                 Image(
                     modifier = Modifier
                         .size(width = 180.dp, height = 230.dp),
-                    painter = painterResource(id = drink.emptyCupImageRes), // استبدل بالصورة الصحيحة
+                    painter = painterResource(id = drink.emptyCupImageRes),
                     contentDescription = "Cup Body"
                 )
                 Image(
@@ -153,7 +155,9 @@ fun CoffeeReadyScreen(
                         shape = CircleShape
                     )
                     .padding(12.dp)
-                    .align(Alignment.Start),
+                    .align(Alignment.Start)
+                    .clip(CircleShape)
+                    .clickable(onClick = onBackClicked),
                 painter = painterResource(R.drawable.ic_close),
                 contentDescription = null,
                 tint = Color.Unspecified
@@ -206,5 +210,5 @@ fun CoffeeReadyScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewCoffeeReadyScreen() {
-    CoffeeReadyScreen(drink = coffeeDrinks[0], {})
+    CoffeeReadyScreen(drink = coffeeDrinks[0], {},{})
 }

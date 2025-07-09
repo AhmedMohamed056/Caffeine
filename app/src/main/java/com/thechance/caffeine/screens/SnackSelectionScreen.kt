@@ -20,11 +20,13 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
@@ -45,17 +47,18 @@ data class Snack(
 )
 
 val snacks = listOf(
-    Snack(1, "Oreo", R.drawable.oreo, R.drawable.snack6),
-    Snack(2, "Croissant", R.drawable.croissant, R.drawable.snack4),
+    Snack(1, "Oreo", R.drawable.oreo1, R.drawable.snack6),
+    Snack(2, "Croissant", R.drawable.croissant1, R.drawable.snack4),
     Snack(3, "Cinnamon Roll", R.drawable.cinnamon_roll, R.drawable.snack5),
-    Snack(4, "Cookies", R.drawable.cookies, R.drawable.snack3),
+    Snack(4, "Cookies", R.drawable.cookies1, R.drawable.snack3),
     Snack(6, "Chocolate", R.drawable.chocolate, R.drawable.snack1),
-    Snack(7, "Donut", R.drawable.donut, R.drawable.snack2),
+    Snack(7, "Donut", R.drawable.donuts1, R.drawable.snack2),
 )
 
 @Composable
 fun SnackSelectionScreen(
-    onSnackClicked: (Snack) -> Unit
+    onSnackClicked: (Snack) -> Unit,
+    onBackClicked: () -> Unit
 ) {
     val listState = rememberLazyListState()
 
@@ -74,6 +77,8 @@ fun SnackSelectionScreen(
                         color = Color(0xFFF5F5F5),
                         shape = CircleShape
                     )
+                    .clip(CircleShape)
+                    .clickable(onClick = onBackClicked)
                     .padding(12.dp),
                 painter = painterResource(R.drawable.ic_close),
                 contentDescription = null,
@@ -94,7 +99,7 @@ fun SnackSelectionScreen(
         CurvedLazyColumn(
             items = snacks,
             listState = listState,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier,
             onSnackClicked = onSnackClicked
         )
     }
@@ -201,6 +206,7 @@ fun SnackCard(
                 this.scaleX = scale
                 this.scaleY = scale
             }
+            .clip(RoundedCornerShape(topEnd = 32.dp, bottomEnd = 32.dp))
             .clickable(onClick = onClick)
     )
 }

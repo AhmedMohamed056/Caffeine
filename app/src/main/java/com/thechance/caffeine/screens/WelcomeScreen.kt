@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
@@ -63,7 +64,7 @@ fun WelcomeScreen(
     )
 
     val maxAlpha = 1f
-    val minAlpha = 0.5f
+    val minAlpha = 0.6f
     val maxOffset = 20f
     val shadowAlpha = lerp(
         start = maxAlpha,
@@ -100,10 +101,11 @@ fun WelcomeScreen(
                 .graphicsLayer {
                     translationY = shadowOffsetY
                 }
-                .alpha(shadowAlpha),
+                .alpha(shadowAlpha)
+                .blur(12.dp),
             painter = painterResource(R.drawable.shadow),
             contentDescription = "shadow",
-            tint = Color(0xDD1F1F1F),
+            tint = Color(0xFF1F1F1F),
         )
         Spacer(Modifier.weight(1f))
         ButtonWithText(
